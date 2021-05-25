@@ -34,7 +34,7 @@ import org.tensorflow.lite.examples.classification.tflite.Classifier.Model;
 
 public class ClassifierActivity extends CameraActivity implements OnImageAvailableListener {
   private static final Logger LOGGER = new Logger();
-  private static final Size DESIRED_PREVIEW_SIZE = new Size(640, 480);
+  private static final Size DESIRED_PREVIEW_SIZE = new Size(1000 , 1000);
   private static final float TEXT_SIZE_DIP = 10;
   private Bitmap rgbFrameBitmap = null;
   private long lastProcessingTimeMs;
@@ -95,6 +95,7 @@ public class ClassifierActivity extends CameraActivity implements OnImageAvailab
                   classifier.recognizeImage(rgbFrameBitmap, sensorOrientation);
               lastProcessingTimeMs = SystemClock.uptimeMillis() - startTime;
               LOGGER.v("Detect: %s", results);
+              LOGGER.i("Deteksi: %s", results);
 
               runOnUiThread(
                   new Runnable() {
