@@ -56,7 +56,7 @@ public abstract class Classifier {
     FLOAT_MOBILENET,
     QUANTIZED_MOBILENET,
     FLOAT_EFFICIENTNET,
-    QUANTIZED_EFFICIENTNET
+    QUANTIZED_EFFICIENTNET,
   }
 
   /** The runtime device type used for executing classification. */
