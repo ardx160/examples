@@ -110,7 +110,10 @@ public abstract class CameraActivity extends AppCompatActivity
   private Device device = Device.CPU;
   private int numThreads = -1;
 
-  private List recogVal;
+  private List recogVal = new ArrayList<Integer>();;
+  private int sampleLength = 50, savedCount = 0;
+  private String savedRecogVal = "";
+
 
   @Override
   protected void onCreate(final Bundle savedInstanceState) {
@@ -206,7 +209,7 @@ public abstract class CameraActivity extends AppCompatActivity
     device = Device.valueOf(deviceSpinner.getSelectedItem().toString());
     numThreads = Integer.parseInt(threadsTextView.getText().toString().trim());
 
-    recogVal = new ArrayList<Integer>();
+
   }
 
   protected int[] getRgbBytes() {
@@ -561,15 +564,22 @@ public abstract class CameraActivity extends AppCompatActivity
         if (recognition.getTitle() != null) {
 
 
-          int sampleLength = 20;
+
           recogVal.add(recognition.getTitle());
           if (recogVal.size() > sampleLength) recogVal.remove(0);
 
           String modus = getMode(recogVal);
 
-          System.out.println("hasil modulus:: " + modus);
+          if (modus == savedRecogVal) {
+            savedCount = 0;
+          } else {
+            savedCount++;
+            if (savedCount > 10) savedRecogVal = modus;
+          }
 
-          recognitionTextView.setText(modus);
+          System.out.println("hasil :: " + modus + "-----"+ savedRecogVal);
+
+          recognitionTextView.setText(savedRecogVal);
 
         }
         if (recognition.getConfidence() != null)
