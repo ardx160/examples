@@ -56,7 +56,7 @@ public class DetectorActivity extends CameraActivity implements OnImageAvailable
   private static final String TF_OD_API_LABELS_FILE = "tflite_label_map.txt";
   private static final DetectorMode MODE = DetectorMode.TF_OD_API;
   // Minimum detection confidence to track a detection.
-  private static final float MINIMUM_CONFIDENCE_TF_OD_API = 0.1f;
+  private static final float MINIMUM_CONFIDENCE_TF_OD_API = 0.3f;
   private static final boolean MAINTAIN_ASPECT = false;
   private static final Size DESIRED_PREVIEW_SIZE = new Size(640, 480);
   private static final boolean SAVE_PREVIEW_BITMAP = false;
@@ -179,7 +179,7 @@ public class DetectorActivity extends CameraActivity implements OnImageAvailable
             LOGGER.i("Running detection on image " + currTimestamp);
             final long startTime = SystemClock.uptimeMillis();
             final List<Detector.Recognition> results = detector.recognizeImage(croppedBitmap);
-            LOGGER.i(String.valueOf(results));
+            //LOGGER.i(String.valueOf(results));
             lastProcessingTimeMs = SystemClock.uptimeMillis() - startTime;
 
             cropCopyBitmap = Bitmap.createBitmap(croppedBitmap);
@@ -199,15 +199,18 @@ public class DetectorActivity extends CameraActivity implements OnImageAvailable
             final List<Detector.Recognition> mappedRecognitions =
                 new ArrayList<Detector.Recognition>();
 
-            int countall = 0;
-            int countcof = 0;
+//            int countall = 0;
+//            int countcof = 0;
             for (final Detector.Recognition result : results) {
               final RectF location = result.getLocation();
-              countall++;
+//              countall++;
 
+//              if (location != null && result.getConfidence() >= minimumConfidence && result.getTitle().equals("tandan")) {
               if (location != null && result.getConfidence() >= minimumConfidence) {
                 canvas.drawRect(location, paint);
-                countcof++;
+//                countcof++;
+//                LOGGER.i("nama = " + String.valueOf(result));
+
 
                 cropToFrameTransform.mapRect(location);
 
@@ -216,8 +219,9 @@ public class DetectorActivity extends CameraActivity implements OnImageAvailable
               }
             }
 
-            LOGGER.i("total detek = " + String.valueOf(countall));
-            LOGGER.i("total cofiden = " + String.valueOf(countcof));
+//            LOGGER.i("total detek = " + String.valueOf(countall));
+//            LOGGER.i("total cofiden = " + String.valueOf(countcof));
+            LOGGER.i("desired = " + String.valueOf(mappedRecognitions));
 
             tracker.trackResults(mappedRecognitions, currTimestamp);
             trackingOverlay.postInvalidate();
