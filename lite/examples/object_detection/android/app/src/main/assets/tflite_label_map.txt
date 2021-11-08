@@ -1,7 +1,7 @@
-tandan_kosong
-tandan_lewatmatang
-tandan_matang
-tandan_mentah
+Fresh
+Oxidized
+Rubbish
+Rotten
 ???
 ???
 ???
